@@ -4,16 +4,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Top Places Flickr LocationsTVC - Top Locations-->
+        <!--Top Regions Flickr LocationsTVC - Top Locations-->
         <scene sceneID="FxM-qS-w24">
             <objects>
-                <tableViewController id="OWQ-Kl-zw5" customClass="TopPlacesFlickrLocationsTVC" sceneMemberID="viewController">
+                <tableViewController id="OWQ-Kl-zw5" customClass="TopRegionsFlickrLocationsTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ML5-a4-mnr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Flickr Location Cell" textLabel="isg-CY-bZo" detailTextLabel="uD5-dx-EwA" style="IBUITableViewCellStyleSubtitle" id="n7t-pw-DvE">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Region Cell" textLabel="isg-CY-bZo" detailTextLabel="uD5-dx-EwA" style="IBUITableViewCellStyleSubtitle" id="n7t-pw-DvE">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n7t-pw-DvE" id="h5j-ck-6kJ">
@@ -255,6 +255,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4le-iT-Ews"/>
+        <segue reference="0J3-Ar-Upb"/>
     </inferredMetricsTieBreakers>
 </document>

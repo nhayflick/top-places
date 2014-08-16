@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CoreDataTableViewController.h"
 
-@interface FlickrPhotosTVC : UITableViewController
+@interface FlickrPhotosTVC : CoreDataTableViewController
 @property (strong, nonatomic) NSArray *photos;
 
 @end

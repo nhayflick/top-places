@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 fissionmailed. All rights reserved.
 //
 
-#import "FlickrLocationsTVC.h"
+#import "FlickrRegionsTVC.h"
 #import "FlickrFetcher.h"
 
-@interface TopPlacesFlickrLocationsTVC : FlickrLocationsTVC
+@interface TopRegionsFlickrLocationsTVC : FlickrRegionsTVC
 
 @end

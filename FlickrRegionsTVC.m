@@ -6,39 +6,47 @@
 //  Copyright (c) 2014 fissionmailed. All rights reserved.
 //
 
-#import "FlickrLocationsTVC.h"
+#import "FlickrRegionsTVC.h"
 #import "FlickrFetcher.h"
 #import "TopPhotosByLocationFlickrPhotosTVC.h"
+#import "Region+Flickr.h"
+#import "PhotoDatabaseAvailability.h"
 
-@interface FlickrLocationsTVC ()
+@interface FlickrRegionsTVC ()
 
 @end
 
-@implementation FlickrLocationsTVC
+@implementation FlickrRegionsTVC
 
-- (void)setLocations:(NSArray *)locations
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
-    _locations = locations;
-    self.sortedLocations = [FlickrFetcher sortPlacesByCountry:locations];
-    self.countries = [self.sortedLocations allKeys];
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
-}
-
-- (NSDictionary *)locationAtRow:(NSInteger)row inSection:(NSInteger)section
-{
-    NSString *sectionKey = [[self.sortedLocations allKeys] objectAtIndex:section];
-    NSDictionary *location = [[self.sortedLocations valueForKey:sectionKey] objectAtIndex:row];
-    return location;
+    NSLog(@"setManagedObjectContext");
+    _managedObjectContext = managedObjectContext;
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Region"];
+    request.predicate = nil;
+    request.sortDescriptors = @[[[NSSortDescriptor alloc] initWithKey:@"Title" ascending:YES selector:@selector(localizedStandardCompare:)]];
+    
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:nil];
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
-    if (self) {
+    if (self) { 
         // Custom initialization
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+        [[NSNotificationCenter defaultCenter] addObserverForName:PhotoDatabaseAvailabilityNotification
+                                                          object:nil
+                                                           queue:nil
+                                                      usingBlock:^(NSNotification *note) {
+                                                          self.managedObjectContext = note.userInfo[PhotoDatabaseAvailabilityContext];
+                                                      }];
 }
 
 - (void)viewDidLoad
@@ -60,22 +68,16 @@
 
 #pragma mark - Table view data source
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    
-//    // Return the number of sections.
-//}
 
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    // Return the number of rows in the section.
-//}
-
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//
-//}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"Region Cell"];
+    Region *region = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    cell.textLabel.text = region.title;
+    
+    return cell;
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -120,14 +122,14 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.destinationViewController isKindOfClass:[TopPhotosByLocationFlickrPhotosTVC class]]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-        TopPhotosByLocationFlickrPhotosTVC *destinationVC = segue.destinationViewController;
-        NSDictionary *location = [self locationAtRow:indexPath.row inSection:indexPath.section];
-        NSString *locationID = [location valueForKey:FLICKR_PLACE_ID];
-        destinationVC.locationID = locationID;
-        destinationVC.navigationItem.title = [location valueForKey:@"title"];
-    }
+//    if ([segue.destinationViewController isKindOfClass:[TopPhotosByLocationFlickrPhotosTVC class]]) {
+//        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+//        TopPhotosByLocationFlickrPhotosTVC *destinationVC = segue.destinationViewController;
+//        NSDictionary *location = [self locationAtRow:indexPath.row inSection:indexPath.section];
+//        NSString *locationID = [location valueForKey:FLICKR_PLACE_ID];
+//        destinationVC.locationID = locationID;
+//        destinationVC.navigationItem.title = [location valueForKey:@"title"];
+//    }
 }
 
 @end
